@@ -20,7 +20,8 @@ logging.basicConfig(level=logging.DEBUG)
 session = boto3.Session(
 aws_access_key_id='ASIA2XMYS43NTTZPQ6JT',
 aws_secret_access_key='nCea45sH6z/O0FVkf+XJu1kOTz7W/r1/oqB55abD',
-aws_session_token='FwoGZXIvYXdzEMb//////////wEaDCKQMPpXHja6DsfFHSK+AVZkpdp0d3PJ1dXUoh+Dp5YZgrbvNJewzS5lGH78ggxT15Rp+9247QAj0qZ8G4NclErrHsQBIyLrwKXxT0Y4ZwskKxOcUWv2zIQ9el2MXjZmUb9OYBJLIeQ3p//uGJdnZoN98UZaH5S0/cYZECeUSW+SjJh4VGrYbA68uegJzaq+9s5KKKDJfButPoETC+C3TRZEG8fDKWyen/4gW4M9FZGEIFqtworAMM2BV1QT1PeqSo19P4q6/ODAzVF80Vco4J7B8wUyLQ4An8ekB8MQCQwJqySx3Nhr82rHl2lvItJKNTlEQEFfXSb2P7PtDccdFEXr2g=='
+aws_session_token='FwoGZXIvYXdzEMb//////////wEaDCKQMPpXHja6DsfFHSK+AVZkpdp0d3PJ1dXUoh+Dp5YZgrbvNJewzS5lGH78ggxT15Rp+9247QAj0qZ8G4NclErrHsQBIyLrwKXxT0Y4ZwskKxOcUWv2zIQ9el2MXjZmUb9OYBJLIeQ3p//uGJdnZoN98UZaH5S0/cYZECeUSW+SjJh4VGrYbA68uegJzaq+9s5KKKDJfButPoETC+C3TRZEG8fDKWyen/4gW4M9FZGEIFqtworAMM2BV1QT1PeqSo19P4q6/ODAzVF80Vco4J7B8wUyLQ4An8ekB8MQCQwJqySx3Nhr82rHl2lvItJKNTlEQEFfXSb2P7PtDccdFEXr2g==',
+region_name='us-east-1'
 )
 dynamodb = session.resource('dynamodb')
 # dynamodb = boto3.resource('dynamodb')
