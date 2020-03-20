@@ -7,32 +7,20 @@ import time
 import base64
 import boto3
 logging.basicConfig(level=logging.DEBUG)
-# Get the service resource.
-# dynamodb = boto3.client(
-#     'dynamodb',
-#     # Hard coded strings as credentials, not recommended.
-# #    aws_access_key_id='AKIAIO5FODNN7EXAMPLE',
-#  #   aws_secret_access_key='ABCDEF+c2L7yXeGvUyrPgYsDnWRRC1AYEXAMPLE'
-#     aws_access_key_id='ASIAWGE77G4XFQ7GPQOH',
-#     aws_secret_access_key='88JeiPPA3+NTMoDgBA601iG21nxDZ0+aleHEuftR',
-#     aws_session_token='FwoGZXIvYXdzENP//////////wEaDKzMnZU3HzJp30XWaiK+AayWXCw/Pdn7gu64TAM7VVaRdBkyqehAwajSpXErol23Qke+LzUZ2fPlWzuSwwf/SFbRo20FI0tbqRJ5qIaHSPnzdF/9abE/WJBJ1EOpAVBiWQplboYn4ITSESnlTfKMou20l/+lpNZPc6XUHfjcqJFYgRnibbsGCK7Y7wpPv14nLHIw4SEehI9R8k9Gcty1L6pPrDXVrWrPz9Uxmnh5xw8GC9tE5ZoMzXW5JBYeHfCDQyA6qWFXfvmkBjZhFc8o24GM8wUyLSyncH/i0h0MnZth+I2mw+IA5On7Ni6Zc1GCG4d7YW+0fi0jpvHVQo3gXZtVnw=='
-# )
 session = boto3.Session(
-aws_access_key_id='ASIA2XMYS43NTTZPQ6JT',
-aws_secret_access_key='nCea45sH6z/O0FVkf+XJu1kOTz7W/r1/oqB55abD',
-aws_session_token='FwoGZXIvYXdzEMb//////////wEaDCKQMPpXHja6DsfFHSK+AVZkpdp0d3PJ1dXUoh+Dp5YZgrbvNJewzS5lGH78ggxT15Rp+9247QAj0qZ8G4NclErrHsQBIyLrwKXxT0Y4ZwskKxOcUWv2zIQ9el2MXjZmUb9OYBJLIeQ3p//uGJdnZoN98UZaH5S0/cYZECeUSW+SjJh4VGrYbA68uegJzaq+9s5KKKDJfButPoETC+C3TRZEG8fDKWyen/4gW4M9FZGEIFqtworAMM2BV1QT1PeqSo19P4q6/ODAzVF80Vco4J7B8wUyLQ4An8ekB8MQCQwJqySx3Nhr82rHl2lvItJKNTlEQEFfXSb2P7PtDccdFEXr2g==',
+aws_access_key_id='ASIAWGE77G4XBNJUFIMM',
+aws_secret_access_key='5efszffVaCa3NPFWEw3mgjFCUnEC9MVK/oMgvvoW',
+aws_session_token='FwoGZXIvYXdzEAoaDIdk6y4ck+tRbJOSFSK+AbYmPmTzHRiNq57wLtFQbELEYmZQwxBnsQDKVex+PL6filjxL40i0PEhjJCJLAtZUWmEIgNEDWkUmVoQr2TdETDR46lQ8cau2UWv0e1NTc57VrueZKOGEVorqY92J2TwbYTaTr/UDwEbNq75hPyE6Qby8+i4p+pdJ8Rv8n+7yDmBchHRnzTrTMhfcRQsNz2lJOx7sIwBMgGhk+RQiwNoz1LR2qpuq6lfKBAur4iHhYKxlbzsAWcVgnxERp2TjA8og5vQ8wUyLfZzuhOxwX4tjcvdCXRt3PBqjXBH2FG+aRr7PAaW1AjxQC0eNJtu/9lpI5a3rA==',
 region_name='us-east-1'
 )
-dynamodb = session.resource('dynamodb')
+dynamodb = session.resource ('dynamodb')
 # dynamodb = boto3.resource('dynamodb')
-
-# Instantiate a table resource object without actually
-# creating a DynamoDB table. Note that the attributes of this table
-# are lazy-loaded: a request is not made nor are the attribute
-# values populated until the attributes
-# on the table resource are accessed or its load() method is called.
 table = dynamodb.Table('User')
-
+'''
+@app.route("/")
+def hello():
+    return "Home page"
+'''
 @app.route('/user' , methods=['POST'])
 def check_logged_in_status():
     response_json = {}
@@ -126,10 +114,11 @@ def verifyLogin():
     response_json = {}
     response_json["message"] = "error"
     try:
-        data = request.get_json()
+        # data = request.get_json()
         ##
-        email = data.get("email")
-        password = data.get("password")
+        app.logger.debug(request)
+        email = request.args.get("email")
+        password = request.args.get("password")
         # fetch data from db and verify the email, password values
         response = table.get_item(
             Key={
