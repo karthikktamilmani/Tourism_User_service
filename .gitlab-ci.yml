@@ -1,0 +1,37 @@
+image: docker:latest
+variables:
+  DOCKER_DRIVER: overlay2
+
+services:
+- docker:dind
+
+stages:
+- build_dev
+- deploy_dev
+
+build_dev:
+  stage: build_dev
+  script:
+  - docker build -t cloud_test .
+  - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
+
+deploy_dev:
+  stage: deploy_dev
+  script:
+  # Install python requirements
+  - apk update
+  - apk upgrade
+  - apk add util-linux pciutils usbutils coreutils binutils findutils grep
+  - apk add python python-dev py-pip
+
+  # AWS configs
+  - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY
+  - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY
+
+  # Install awscli
+  - pip install awscli
+  
+  - echo "Login to ECR Repository"
+  - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  - echo "Preparation task"echo "Build Docker Image"
+  - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
