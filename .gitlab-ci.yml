@@ -1,7 +1,7 @@
 image: docker:latest
 
 services:
-    - name: docker:dind
+    - name: docker:18.09.7-dind
       entrypoint: ["env", "-u", "DOCKER_HOST"]
       command: ["dockerd-entrypoint.sh"]
 
