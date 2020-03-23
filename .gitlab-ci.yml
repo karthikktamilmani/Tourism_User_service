@@ -52,6 +52,7 @@ deploy_dev:
   - pip install awscli
   
   - echo "Login to ECR Repository"
-  - $(aws ecr get-login --no-include-email --region us-east-1)
+  #- $(aws ecr get-login --no-include-email --region us-east-1)
+  - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test
   - echo "Preparation task"echo "Build Docker Image"
   - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
