@@ -18,7 +18,7 @@ stages:
 build_dev:
   stage: build_dev
   script:
-  - docker build -t cloud_test .
+  - sudo docker build -t cloud_test .
   - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
 
 deploy_dev:
