@@ -1,5 +1,6 @@
 from flask_mail import Mail, Message
 from app import app
+from flask_wtf import FlaskForm
 import logging
 
 mail_settings = {
@@ -12,15 +13,22 @@ mail_settings = {
 }
 logging.basicConfig(level=logging.DEBUG)
 
+#https://www.geeksforgeeks.org/python-convert-html-pdf/
+
 app.config.update(mail_settings)
 mail = Mail(app)
 
-def sendEmail(recepients,subject,body):
+def sendEmail(recepients,subject,body,attachmentName=None):
     try:
         msg = Message(subject=subject,
                       sender=app.config.get("MAIL_USERNAME"),
-                      recipients=[recepients],  # replace with your email for testing
-                      body=body)
+                      recipients=[recepients]  # replace with your email for testing
+                      )
+        msg.html = body
+        if attachmentName is not None:
+            fileObj = open("example.png",mode='r')
+            msg.attachments(filename="example.png",data=fileObj.read())
         mail.send(msg)
     except Exception as e:
+        app.logger.debug("Error sending email =======>")
         app.logger.debug(e)

@@ -6,11 +6,12 @@ import json
 import time
 import base64
 import boto3
+
 logging.basicConfig(level=logging.DEBUG)
 session = boto3.Session(
-aws_access_key_id='ASIAWGE77G4XBNJUFIMM',
-aws_secret_access_key='5efszffVaCa3NPFWEw3mgjFCUnEC9MVK/oMgvvoW',
-aws_session_token='FwoGZXIvYXdzEAoaDIdk6y4ck+tRbJOSFSK+AbYmPmTzHRiNq57wLtFQbELEYmZQwxBnsQDKVex+PL6filjxL40i0PEhjJCJLAtZUWmEIgNEDWkUmVoQr2TdETDR46lQ8cau2UWv0e1NTc57VrueZKOGEVorqY92J2TwbYTaTr/UDwEbNq75hPyE6Qby8+i4p+pdJ8Rv8n+7yDmBchHRnzTrTMhfcRQsNz2lJOx7sIwBMgGhk+RQiwNoz1LR2qpuq6lfKBAur4iHhYKxlbzsAWcVgnxERp2TjA8og5vQ8wUyLfZzuhOxwX4tjcvdCXRt3PBqjXBH2FG+aRr7PAaW1AjxQC0eNJtu/9lpI5a3rA==',
+aws_access_key_id='ASIAWGE77G4XC3FMJYNM',
+aws_secret_access_key='l1aiMNoIJURXWDGK7SxM0dvR6yYI4xbRuhewEE5J',
+aws_session_token='FwoGZXIvYXdzEFQaDFdWsDfupOIBi2O8lCK+AYATU7H7PrBPMIxPujLDV6oa9d2WSb+EYW9KU6PRe2fbf/jIesfeR7MYCkDzYZh8YsdPbpv6H+htXBOcFD01Tez0/BcwF5hubCGD3GwuudlPhIRsXtQo3t0Cbc9yzBe4Rzl/5mQ2fKNiTzws7mft4A+JRQcfrvErW3gzSgOGvwn2DLEUelWhLUVt+h0cFHedRJlroaIdrdDwB6EQXQsMOsg6dsMf/AEiJKLF3RNQh/m7KY4UM98E1GoJwQe+BhgozcXg8wUyLTq+d93hBVBHVQsI8qmQD9PnNA/gwsCuHRzf4ShaPyxvzWGaIoUJU2wJSuAl/A==',
 region_name='us-east-1'
 )
 dynamodb = session.resource ('dynamodb')
@@ -21,6 +22,12 @@ table = dynamodb.Table('User')
 def hello():
     return "Home page"
 '''
+def getDataFromRequest(dataObj,keyValue,requestObj=None):
+    if dataObj is not None:
+        return base64.b64decode(dataObj.get(keyValue)).decode("ascii")
+    else:
+        return base64.b64decode(request.args.get(keyValue)).decode("ascii")
+
 @app.route('/user' , methods=['POST'])
 def check_logged_in_status():
     response_json = {}
@@ -28,7 +35,7 @@ def check_logged_in_status():
     try:
         data = request.get_json()
         ##
-        email = data.get("email")
+        email = getDataFromRequest(dataObj=data,keyValue="email")
         if encoder.check_validity_token(request.headers['token'],email):
             response_json["message"] = "ok"
     except Exception as e:
@@ -43,9 +50,15 @@ def create_new_user():
         ##
         data = request.get_json()
         ##
-        userName = data.get("name")
-        email = data.get("email")
-        password = data.get("password")
+
+        app.logger.debug("Test")
+        userName = getDataFromRequest(dataObj=data,keyValue="name")
+        email = getDataFromRequest(dataObj=data,keyValue="email")
+        password = getDataFromRequest(dataObj=data,keyValue="password")
+        ##
+        password = helper.encryptValue(password)
+        # print(email)
+        app.logger.debug(email)
         validate_email(email)
         ##
 
@@ -83,8 +96,8 @@ def verifyOTP():
         ##
         data = request.get_json()
         ##
-        email = data.get("email")
-        otp = data.get("OTP")
+        email = getDataFromRequest(dataObj=data,keyValue="email")
+        otp = getDataFromRequest(dataObj=data,keyValue="OTP")
         submittedTime = int(round(time.time() * 1000))
         # fetch data from db and verify the OTP values
         response = table.get_item(
@@ -117,9 +130,12 @@ def verifyLogin():
         # data = request.get_json()
         ##
         app.logger.debug(request)
-        email = request.args.get("email")
-        password = request.args.get("password")
+        email = getDataFromRequest(dataObj=None,keyValue="email",requestObj=request)
+        password = getDataFromRequest(dataObj=None,keyValue="password",requestObj=request)
         # fetch data from db and verify the email, password values
+        app.logger.debug("hhhhh")
+        app.logger.debug(email)
+        app.logger.debug(password)
         response = table.get_item(
             Key={
                 'EMAIL_ID': email
@@ -127,8 +143,9 @@ def verifyLogin():
         )
         if 'Item' in response:
             item = response['Item']
-            orgPass = item['PASSWORD']
-            if password == orgPass:
+            orgPass = item['PASSWORD'].value
+            if password == helper.decryptValue(orgPass):
+                app.logger.debug("Check passed")
                 genOTP = helper.sendOTPMail(email)
                 # update the generated OTP
                 table.update_item(
