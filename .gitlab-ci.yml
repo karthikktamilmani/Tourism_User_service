@@ -45,13 +45,13 @@ deploy_dev:
   - apk add python python-dev py-pip
 
   # AWS configs
-  - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY
-  - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_KEY
+  - export AWS_ACCESS_KEY_ID='ASIA2XMYS43NZBCKPAFP'
+  - export AWS_SECRET_ACCESS_KEY='KtQvCKiKh//6FCOgz86MXbl5TACY1X0r1sRCk2mk'
 
   # Install awscli
   - pip install awscli
   
   - echo "Login to ECR Repository"
-  - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  - $(aws ecr get-login --no-include-email --region us-east-1)
   - echo "Preparation task"echo "Build Docker Image"
   - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
