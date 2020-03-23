@@ -26,12 +26,8 @@ services:
   - docker:19.03.1-dind
 
 stages:
-- before_script
 - build_dev
 - deploy_dev
-
-before_script:
-  - docker info
 
 build_dev:
   stage: build_dev
