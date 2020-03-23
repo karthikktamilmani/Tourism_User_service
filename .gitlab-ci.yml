@@ -1,24 +1,15 @@
-image: docker:latest
-
-services:
-    - name: docker:18.09.7-dind
-      entrypoint: ["env", "-u", "DOCKER_HOST"]
-      command: ["dockerd-entrypoint.sh"]
-
-variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    # See https://github.com/docker-library/docker/pull/166
-    DOCKER_TLS_CERTDIR: ""
-
 stages:
+- before_script
 - build_dev
 - deploy_dev
+
+before_script:
+  - docker info
 
 build_dev:
   stage: build_dev
   script:
-  - sudo docker build -t cloud_test .
+  - docker build -t cloud_test .
   - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
 
 deploy_dev:
