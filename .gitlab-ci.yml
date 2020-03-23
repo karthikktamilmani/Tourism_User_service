@@ -26,14 +26,14 @@ services:
   - docker:19.03.1-dind
 
 stages:
-- build_dev
+# - build_dev
 - deploy_dev
 
-build_dev:
-  stage: build_dev
-  script:
-  - docker build -t cloud_test .
-  - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
+# build_dev:
+#   stage: build_dev
+#   script:
+#   - 
+  
 
 deploy_dev:
   stage: deploy_dev
@@ -56,4 +56,6 @@ deploy_dev:
   - echo 'aws ecr get-login --no-include-email --region us-east-1' | sh
   #- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test
   - echo "Preparation task"echo "Build Docker Image"
+  - docker build -t cloud_test .
+  - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
   - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
