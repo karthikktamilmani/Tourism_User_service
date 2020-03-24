@@ -38,6 +38,11 @@ route_test:
   stage: route_test
   script:
     # - pip install -r requirements.txt
+    - apk update
+    - apk upgrade
+    - apk add util-linux pciutils usbutils coreutils binutils findutils grep
+    - apk add python python-dev py-pip
+    - pip install -r requirements.txt
     - python test_routes.py
 
 deploy_dev:
