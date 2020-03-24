@@ -33,7 +33,6 @@ stages:
 # build_dev:
 #   stage: build_dev
 #   script:
-#   -
 
 route_test:
   stage: route_test
