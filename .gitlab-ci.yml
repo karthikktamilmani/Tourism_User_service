@@ -27,6 +27,7 @@ services:
 
 stages:
 # - build_dev
+- test
 - deploy_dev
 
 # build_dev:
