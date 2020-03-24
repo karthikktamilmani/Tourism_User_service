@@ -32,8 +32,13 @@ stages:
 # build_dev:
 #   stage: build_dev
 #   script:
-#   - 
-  
+#   -
+
+test:
+  stage: test
+  script:
+    # - pip install -r requirements.txt
+    - python3 test_routes.py
 
 deploy_dev:
   stage: deploy_dev
@@ -50,7 +55,7 @@ deploy_dev:
 
   # Install awscli
   - pip install awscli
-  
+
   - echo "Login to ECR Repository"
   #- $(aws ecr get-login --no-include-email --region us-east-1)
 #   - echo 'aws ecr get-login --no-include-email --region us-east-1' | sh

@@ -9,9 +9,9 @@ import boto3
 
 logging.basicConfig(level=logging.DEBUG)
 session = boto3.Session(
-aws_access_key_id='ASIAWGE77G4XC3FMJYNM',
-aws_secret_access_key='l1aiMNoIJURXWDGK7SxM0dvR6yYI4xbRuhewEE5J',
-aws_session_token='FwoGZXIvYXdzEFQaDFdWsDfupOIBi2O8lCK+AYATU7H7PrBPMIxPujLDV6oa9d2WSb+EYW9KU6PRe2fbf/jIesfeR7MYCkDzYZh8YsdPbpv6H+htXBOcFD01Tez0/BcwF5hubCGD3GwuudlPhIRsXtQo3t0Cbc9yzBe4Rzl/5mQ2fKNiTzws7mft4A+JRQcfrvErW3gzSgOGvwn2DLEUelWhLUVt+h0cFHedRJlroaIdrdDwB6EQXQsMOsg6dsMf/AEiJKLF3RNQh/m7KY4UM98E1GoJwQe+BhgozcXg8wUyLTq+d93hBVBHVQsI8qmQD9PnNA/gwsCuHRzf4ShaPyxvzWGaIoUJU2wJSuAl/A==',
+aws_access_key_id='ASIAWGE77G4XOKOHOSVP',
+aws_secret_access_key='89I9L7Bt4uEMTpDpBkY/5dRFgAeSiARizgjfnp52',
+aws_session_token='FwoGZXIvYXdzEH8aDM6NIVFMVGaJdLE7iiK+AVI/Ay6225asBstvzgSx+GGRM5u4QtRLwPuhftkYknZfFWkkPPzxgW5v/Nsoc0yC4mUVH/cLCDT87ZzDFona/vJvGfc5t0NHEFBDVE77em/9PgemEkYCk7Etw2jgk2gxLM/Y942deEihP21wJE2BjE9gW936Np/kUQptM1hBp7g0nI5wge5tkw4tCRkr+uklu8MVQABoCiJyWLWc6DA2ELkLBOWjfULsJp6XcUD2+UPSPQuWh11mRpp6Lo24+pMovevp8wUyLejwrTEpzWJABeFXstN9qrsRBzRr0kHnGa0m2wg/mqQ6+JGTOToB5Q8S+WqNzw==',
 region_name='us-east-1'
 )
 dynamodb = session.resource ('dynamodb')
