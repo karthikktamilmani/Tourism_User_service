@@ -38,7 +38,7 @@ route_test:
   stage: route_test
   script:
     # - pip install -r requirements.txt
-    - python3 test_routes.py
+    - python test_routes.py
 
 deploy_dev:
   stage: deploy_dev
