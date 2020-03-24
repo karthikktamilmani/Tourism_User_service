@@ -27,7 +27,7 @@ services:
 
 stages:
 # - build_dev
-- test
+- route_test
 - deploy_dev
 
 # build_dev:
@@ -35,8 +35,8 @@ stages:
 #   script:
 #   -
 
-test:
-  stage: test
+route_test:
+  stage: route_test
   script:
     # - pip install -r requirements.txt
     - python3 test_routes.py
