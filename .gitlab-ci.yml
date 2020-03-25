@@ -40,7 +40,7 @@ route_test:
   before_script:
     - apt-get update -qy
     - apt-get install -y python-dev python-pip
-    - pip install -r requirements.txt
+    - pip3 install -r requirements.txt
 
   script:
     # - pip install -r requirements.txt
