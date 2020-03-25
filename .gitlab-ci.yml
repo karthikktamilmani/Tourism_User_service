@@ -40,7 +40,7 @@ route_test:
     # - pip install -r requirements.txt
     # - apt-get update -qy
     # - apt-get install -y python-dev python-pip
-    # - pip install -r requirements.txt
+    # - pip install -r requirements.tx
     - apk update
     - apk upgrade
     - apk add util-linux pciutils usbutils coreutils binutils findutils grep
