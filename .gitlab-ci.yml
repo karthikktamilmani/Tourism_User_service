@@ -1,4 +1,4 @@
-image: docker:19.03.1
+# image: docker:19.03.1
 
 variables:
   # When using dind service, we need to instruct docker, to talk with
@@ -22,8 +22,8 @@ variables:
   # container, thanks to volume mount from config.toml
   DOCKER_TLS_CERTDIR: "/certs"
 
-services:
-  - docker:19.03.1-dind
+# services:
+#   - docker:19.03.1-dind
 
 stages:
 # - build_dev
@@ -36,21 +36,28 @@ stages:
 
 route_test:
   stage: route_test
+  image: python:3.7
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y python-dev python-pip
+    - pip install -r requirements.txt
+
   script:
     # - pip install -r requirements.txt
-    # - apt-get update -qy
-    # - apt-get install -y python-dev python-pip
-    # - pip install -r requirements.tx
-    - apk update
-    - apk upgrade
-    - apk add util-linux pciutils usbutils coreutils binutils findutils grep
-    - apk add python python-dev py-pip
-    - apk add libffi-dev
-    - pip install -r requirements.txt
+
+    # - apk update
+    # - apk upgrade
+    # - apk add util-linux pciutils usbutils coreutils binutils findutils grep
+    # - apk add python python-dev py-pip
+    # - apk add libffi-dev
+    # - pip install -r requirements.txt
     - python test_routes.py
 
 deploy_dev:
   stage: deploy_dev
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
   script:
   # Install python requirements
   - apk update
