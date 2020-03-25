@@ -44,8 +44,8 @@ route_test:
     - apk update
     - apk upgrade
     - apk add util-linux pciutils usbutils coreutils binutils findutils grep
-    - apk add python python-dev python-pip
-    - apk add libevent-dev
+    - apk add python python-dev py-pip
+    - apk add libffi-dev
     - pip install -r requirements.txt
     - python test_routes.py
 
