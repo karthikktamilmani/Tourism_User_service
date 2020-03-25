@@ -8,7 +8,7 @@ docutils==0.15.2
 email-validator==1.0.5
 Flask==1.1.1
 Flask-Mail==0.9.1
-FlaskForm==0.14
+Flask-WTF==0.14.2
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.1
@@ -22,3 +22,4 @@ s3transfer==0.3.3
 six==1.14.0
 urllib3==1.25.8
 Werkzeug==1.0.0
+WTForms==2.1
