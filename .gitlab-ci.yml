@@ -36,18 +36,17 @@ stages:
 
 route_test:
   stage: route_test
-  image: python:3.6
   script:
     # - pip install -r requirements.txt
-    - apt-get update -qy
-    - apt-get install -y python-dev python-pip
-    - pip install -r requirements.txt
-    # - apk update
-    # - apk upgrade
-    # - apk add util-linux pciutils usbutils coreutils binutils findutils grep
-    # - apk add python python-dev python pip
-    # - apk add libevent-dev
+    # - apt-get update -qy
+    # - apt-get install -y python-dev python-pip
     # - pip install -r requirements.txt
+    - apk update
+    - apk upgrade
+    - apk add util-linux pciutils usbutils coreutils binutils findutils grep
+    - apk add python python-dev python-pip
+    - apk add libevent-dev
+    - pip install -r requirements.txt
     - python test_routes.py
 
 deploy_dev:
