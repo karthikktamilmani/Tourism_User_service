@@ -8,6 +8,7 @@ docutils==0.15.2
 email-validator==1.0.5
 Flask==1.1.1
 Flask-Mail==0.9.1
+FlaskForm==0.14
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.1
