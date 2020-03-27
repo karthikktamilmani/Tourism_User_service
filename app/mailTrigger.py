@@ -1,6 +1,5 @@
 from flask_mail import Mail, Message
 from app import app
-from flask_wtf import FlaskForm
 import logging
 
 mail_settings = {
