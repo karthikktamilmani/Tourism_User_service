@@ -66,7 +66,7 @@ deploy_dev:
   - export TASK_VERSION=$(aws ecs register-task-definition --family userTesting --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
   - echo "ssss" ${TASK_VERSION}
 
-
+  - aws ecs update-service --cluster Project-test --service User-Service --task-definition userTesting:${TASK_VERSION}
   - echo "Login to ECR Repository"
 #   - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test
 #   - echo "Preparation task"echo "Build Docker Image"
