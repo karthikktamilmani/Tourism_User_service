@@ -74,8 +74,8 @@ deploy_dev:
   # Install awscli
   - pip install awscli
   
-  - export TASK_VERSION=$(aws ecs register-task-definition --family booking-module-task --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
-  - echo "Registered ECS Task Definition: " $TASK_VERSION
+  - export TASK_VERSION=$(aws ecs register-task-definition --family userTesting --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
+  - echo ${TASK_VERSION}
 
 
   - echo "Login to ECR Repository"
