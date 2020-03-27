@@ -31,7 +31,7 @@ stages:
 - deploy_dev
 
 
- route_test:
+route_test:
    stage: route_test
    image: python:3.7
    before_script:
