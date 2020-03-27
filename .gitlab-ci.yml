@@ -64,14 +64,12 @@ deploy_dev:
   - pip install awscli
   
   - export TASK_VERSION=$(aws ecs register-task-definition --family userTesting --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
-  - echo ${TASK_VERSION}
+  - echo "ssss" ${TASK_VERSION}
 
 
   - echo "Login to ECR Repository"
-  #- $(aws ecr get-login --no-include-email --region us-east-1)
-#   - echo 'aws ecr get-login --no-include-email --region us-east-1' | sh
-  - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test
-  - echo "Preparation task"echo "Build Docker Image"
-  - docker build -t cloud_test .
-  - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
-  - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
+#   - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test
+#   - echo "Preparation task"echo "Build Docker Image"
+#   - docker build -t cloud_test .
+#   - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
+#   - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
