@@ -30,29 +30,18 @@ stages:
 #- route_test
 - deploy_dev
 
-# build_dev:
-#   stage: build_dev
+
+# route_test:
+#   stage: route_test
+#   image: python:3.7
+#   before_script:
+#     - apt-get update -qy
+#     - apt-get install -y python-dev python-pip
+#     - pip3 install -r requirements.txt
+#     - pip3 install flask_wtf
+
 #   script:
-
-route_test:
-  stage: route_test
-  image: python:3.7
-  before_script:
-    - apt-get update -qy
-    - apt-get install -y python-dev python-pip
-    - pip3 install -r requirements.txt
-    - pip3 install flask_wtf
-
-  script:
-    # - pip install -r requirements.txt
-
-    # - apk update
-    # - apk upgrade
-    # - apk add util-linux pciutils usbutils coreutils binutils findutils grep
-    # - apk add python python-dev py-pip
-    # - apk add libffi-dev
-    # - pip install -r requirements.txt
-    - python test_routes.py
+#     - python test_routes.py
 
 deploy_dev:
   stage: deploy_dev
