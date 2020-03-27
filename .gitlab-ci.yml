@@ -65,6 +65,7 @@ deploy_dev:
   - apk upgrade
   - apk add util-linux pciutils usbutils coreutils binutils findutils grep
   - apk add python python-dev py-pip
+  - apt-get install jq
 
   # AWS configs
   #- export AWS_ACCESS_KEY_ID='ASIA2XMYS43NZBCKPAFP'
@@ -72,6 +73,10 @@ deploy_dev:
 
   # Install awscli
   - pip install awscli
+  
+  - export TASK_VERSION=$(aws ecs register-task-definition --family booking-module-task --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
+  - echo "Registered ECS Task Definition: " $TASK_VERSION
+
 
   - echo "Login to ECR Repository"
   #- $(aws ecr get-login --no-include-email --region us-east-1)
