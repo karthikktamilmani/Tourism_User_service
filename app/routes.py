@@ -9,19 +9,17 @@ import boto3
 
 logging.basicConfig(level=logging.DEBUG)
 session = boto3.Session(
-aws_access_key_id='ASIAWGE77G4XA47AYVV4',
-aws_secret_access_key='+UmnvsnKOcZX9T4OWJz/rbwr4Wou20mlWhE3QA7c',
-aws_session_token='FwoGZXIvYXdzEIT//////////wEaDLg0AhPRSTFFb9/JTyK+AWX+6Eh8lOERezntL3/cxeWI9Z1xYdz6ddMBItfAHmWbFpT9CeKT1JNTq4gfliiZGblgXGkSEj8+JowjqJrpYeEUCRUE7prca5ySYLZSxAw8TjPulSHbOuRxaeakgGAwWcrywt2JKrKoMU9UUWY5y9AWbHSN8C/vIvbZJ9fR39MQb16s3qkoQs29Z1N507T+q9/cNo2krR9yr7c/EstB+33TlfQarxewZcxl+oJ8ZebCrL9MvaOoy9B2nwHm++wonofr8wUyLcajxO18LLHpAIKejEmu/ZXRNhcEjrXg98SGkb2b9op82ma4csDqxevMtr2pLA==',
+aws_access_key_id='ASIA2XMYS43N7ZNWPLCY',
+aws_secret_access_key='TxNkytFs8n6onvqcet//9nUtyS+H95lZfpzBWiCd',
+aws_session_token='FwoGZXIvYXdzELX//////////wEaDBAj6GlS9fGBKGVASiK+AXZ2FBtY8P0oKH5VQbyHSWkSC3hSH219TEUkgHL7meNuI2m56SKZiSpk7N6Wc4BqoozQ+uL2/w3ewbY1J92edL8kcBqoCaHokO8vlBP2GL2hsy1jkunwMpSwJPKqAc0cXMREmGbUMjbVbD0rDlE9WPJaDuWwHDnoBVEMC1AldhNqutDnRYrHfWow78o9tuvKVBacwNKYSvD1SI3OVv6BWL79QZvbBBLdOIpRDf5kvI3skYL08c8TTi5bT/MLroQonu/18wUyLTYFr9RZbBc4IGj6MyGClBTnaRUI3LDTkqyUy5wtKou3ety0FwwYyQ0TG/ihNA==',
 region_name='us-east-1'
 )
 dynamodb = session.resource ('dynamodb')
 # dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('User')
-'''
 @app.route("/")
 def hello():
     return "Home page"
-'''
 def getDataFromRequest(dataObj,keyValue,requestObj=None):
     if dataObj is not None:
         return base64.b64decode(dataObj.get(keyValue)).decode("ascii")
