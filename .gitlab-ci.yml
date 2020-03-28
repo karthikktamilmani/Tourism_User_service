@@ -68,6 +68,6 @@ deploy_dev:
   - docker build -t cloud_test .
   - docker tag cloud_test:latest 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
   - docker push 737443768027.dkr.ecr.us-east-1.amazonaws.com/cloud_test:latest
-  - export TASK_VERSION=$(aws ecs --region us-east-1 register-task-definition --family userTesting --container-definitions file://dummyTask.json | jq --raw-output '.taskDefinition.revision')
+  - export TASK_VERSION=$(aws ecs --region us-east-1 register-task-definition --family userTesting --container-definitions file://containerDef.json | jq --raw-output '.taskDefinition.revision')
   - echo "ssss" ${TASK_VERSION}
   - aws ecs update-service --region us-east-1 --cluster Project-test --service User-Service --task-definition userTesting:${TASK_VERSION}
