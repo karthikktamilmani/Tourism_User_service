@@ -41,7 +41,7 @@ route_test:
      - pip3 install flask_wtf
 
   script:
-     - export SECRET_KEY=$SECRET_KEY
+     - sed -i 's/$ENV_SECRET_KEY/$SECRET_KEY/g' app/__init__.py 
      - python test_routes.py
 
 deploy_dev:
