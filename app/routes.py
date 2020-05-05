@@ -16,6 +16,9 @@ region_name='us-east-1')
 dynamodb = session.resource ('dynamodb')
 # dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('User')
+@app.route("/home"):
+    return app.config["SECRET_KEY"]
+
 @app.route("/")
 def hello():
     return "Home page"
