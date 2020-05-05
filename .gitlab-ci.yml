@@ -34,7 +34,7 @@ stages:
 route_test:
   stage: route_test
   image: python:3.7
-  environment:
+  variables:
     SECRET_KEY: $SECRET_KEY
   before_script:
      - apt-get update -qy
