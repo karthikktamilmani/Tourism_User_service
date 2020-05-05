@@ -27,7 +27,7 @@ variables:
 
 stages:
 # - build_dev
-- route_test
+#- route_test
 - deploy_dev
 
 
