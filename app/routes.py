@@ -18,6 +18,8 @@ dynamodb = session.resource ('dynamodb')
 table = dynamodb.Table('User')
 @app.route("/")
 def hello():
+    app.logger.debug("sssssssss")
+    app.logger.debug(app.config.get("SECRET_KEY"))
     return "Home page"
 def getDataFromRequest(dataObj,keyValue,requestObj=None):
     if dataObj is not None:

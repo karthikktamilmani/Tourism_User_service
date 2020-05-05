@@ -15,6 +15,8 @@ COPY . /app
 
 EXPOSE 5001 
 
+ENV SECRET_KEY=$SECRET_KEY
+
 ENTRYPOINT [ "python3" ]
 
 CMD [ "testRun.py" ]
