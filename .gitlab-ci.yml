@@ -55,7 +55,8 @@ deploy_dev:
   - apk add util-linux pciutils usbutils coreutils binutils findutils grep
   - apk add python python-dev py-pip
   - apk add jq
-
+  - echo SECRET_KEY
+  - echo $SECRET_KEY
   # AWS configs
   #- export AWS_ACCESS_KEY_ID='ASIA2XMYS43NZBCKPAFP'
   #- export AWS_SECRET_ACCESS_KEY='KtQvCKiKh//6FCOgz86MXbl5TACY1X0r1sRCk2mk'
