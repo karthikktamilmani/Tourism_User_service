@@ -35,7 +35,7 @@ route_test:
   stage: route_test
   image: python:3.7
   environment:
-    - SECRET_KEY=$SECRET_KEY
+    SECRET_KEY : $SECRET_KEY
   before_script:
      - apt-get update -qy
      - apt-get install -y python-dev python-pip
