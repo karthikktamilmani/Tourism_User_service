@@ -39,6 +39,13 @@ class BasicTests(unittest.TestCase):
         response = self.app.get('/user/login',query_string=p)
         data = json.loads(response.get_data(as_text=True))
         assert data['message'] == 'ok'
+        
+    def test_secret(self):
+        p = (('email','dGVzdGNhc2VzQHRlc3QuY29t'),('password','aGVsbG8='))
+        response = self.app.get('/home')
+        #data = json.loads(response.get_data(as_text=True))
+        print(response)
+        assert response == 'HHH'
 
 if __name__ == "__main__":
     unittest.main()
