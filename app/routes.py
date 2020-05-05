@@ -18,9 +18,9 @@ dynamodb = session.resource ('dynamodb')
 table = dynamodb.Table('User')
 @app.route("/home")
 def home_secret():
-    rint(app.config.get('SECRET_KEY'))
+    print(app.config.get('SECRET_KEY'))
     print("asa")
-    return "HHH"
+    return app.config.get('SECRET_KEY')
 
 @app.route("/")
 def hello():
