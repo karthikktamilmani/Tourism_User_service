@@ -10,6 +10,13 @@ class BasicTests(unittest.TestCase):
         self.app = app.test_client()
         self.app.testing = True
         pass
+    
+    def test_secret(self):
+        p = (('email','dGVzdGNhc2VzQHRlc3QuY29t'),('password','aGVsbG8='))
+        response = self.app.get('/home')
+        #data = json.loads(response.get_data(as_text=True))
+        print(response)
+        assert response == 'HHH'
 
     def test_createUserInvalidEmail(self):
         response = self.app.post('/user/create',
@@ -40,12 +47,6 @@ class BasicTests(unittest.TestCase):
         data = json.loads(response.get_data(as_text=True))
         assert data['message'] == 'ok'
         
-    def test_secret(self):
-        p = (('email','dGVzdGNhc2VzQHRlc3QuY29t'),('password','aGVsbG8='))
-        response = self.app.get('/home')
-        #data = json.loads(response.get_data(as_text=True))
-        print(response)
-        assert response == 'HHH'
 
 if __name__ == "__main__":
     unittest.main()
