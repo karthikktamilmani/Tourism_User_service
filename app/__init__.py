@@ -6,7 +6,7 @@ CORS(app)
 
 app.config.update(
     # SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/'
-    SECRET_KEY=$ENV_SECRET_KEY
+    SECRET_KEY=$SECRET_KEY
 )
 
 from app import routes
