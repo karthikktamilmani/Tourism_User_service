@@ -29,6 +29,28 @@ def getDataFromRequest(dataObj,keyValue,requestObj=None):
 
 @app.route('/user' , methods=['POST'])
 def check_logged_in_status():
+    """checks the JWT token and returns whether it is valid or not
+            This is using docstrings for specifications. All the parameter values are base64 encoded and are sent.
+            ---
+            parameters:
+              - name: email
+                in: body
+                type: string
+                format: byte
+                required: true
+              - name: token
+                in: header
+                type: string
+                required: true
+            responses:
+              200:
+                schema:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        description: ok if valid, else error
+            """
     response_json = {}
     response_json["message"] = "error"
     try:
@@ -43,6 +65,37 @@ def check_logged_in_status():
 
 @app.route('/user/create' , methods=['POST'])
 def create_new_user():
+    """Creates a new user and send OTP to the email
+                This is using docstrings for specifications. All the parameter values are base64 encoded and are sent.
+                ---
+                parameters:
+                  - name: name
+                    in: body
+                    type: string
+                    format: byte
+                    required: true
+                  - name: email
+                    in: body
+                    type: string
+                    format: byte
+                    required: true
+                  - name: password
+                    in: body
+                    type: string
+                    format: byte
+                    required: true
+                responses:
+                  200:
+                    schema:
+                        type: object
+                        properties:
+                          message:
+                            type: string
+                            description: ok if valid, else error
+                          error:
+                            type: string
+                            description: describes the reason for error
+                """
     response_json = {}
     response_json["message"] = "error"
     try:
@@ -87,42 +140,31 @@ def create_new_user():
     #
     return json.dumps(response_json)
 
-@app.route('/user/verify', methods=['POST'])
-def verifyOTP():
-    response_json = {}
-    response_json["message"] = "error"
-    try:
-        ##
-        data = request.get_json()
-        ##
-        email = getDataFromRequest(dataObj=data,keyValue="email")
-        otp = getDataFromRequest(dataObj=data,keyValue="OTP")
-        submittedTime = int(round(time.time() * 1000))
-        # fetch data from db and verify the OTP values
-        response = table.get_item(
-            Key={
-                'EMAIL_ID': email
-            }
-        )
-        if 'Item' in response:
-            item = response['Item']
-            ##
-            genOTP = item['OTP']
-            genTime = item['OTP_GEN_TIME']
-            if genOTP == otp and ( ( submittedTime - genTime ) <= 1800000 ):
-                response_json["message"] = "ok"
-                response_json["token"] = encoder.encode_auth_token(email).decode('utf-8')
-            app.logger.debug(submittedTime - genTime)
-            # response_json["message"] = "ok"
-            # response_json["token"] = encoder.encode_auth_token(email).decode('utf-8')
-        ##
-    except Exception as e:
-        app.logger.debug(e)
-    #
-    return json.dumps(response_json)
-
-@app.route('/user/login')
+@app.route('/user/login', methods=["GET"])
 def verifyLogin():
+    """Verifies user email and password and sends OTP to the email
+                    This is using docstrings for specifications. All the parameter values are base64 encoded and are sent.
+                    ---
+                    parameters:
+                      - name: email
+                        in: query
+                        type: string
+                        format: byte
+                        required: true
+                      - name: password
+                        in: query
+                        type: string
+                        format: byte
+                        required: true
+                    responses:
+                      200:
+                        schema:
+                            type: object
+                            properties:
+                              message:
+                                type: string
+                                description: ok if valid, else error
+                    """
     response_json = {}
     response_json["message"] = "error"
     try:
@@ -158,6 +200,66 @@ def verifyLogin():
                     }
                 )
                 response_json["message"] = "ok"
+        ##
+    except Exception as e:
+        app.logger.debug(e)
+    #
+    return json.dumps(response_json)
+
+@app.route('/user/verify', methods=['POST'])
+def verifyOTP():
+    """Verifies the OTP sent to the email
+                This is using docstrings for specifications. All the parameter values are base64 encoded and are sent.
+                ---
+                parameters:
+                  - name: email
+                    in: body
+                    type: string
+                    format: byte
+                    required: true
+                  - name: OTP
+                    in: body
+                    type: string
+                    format: byte
+                    required: true
+                responses:
+                  200:
+                    schema:
+                        type: object
+                        properties:
+                          message:
+                            type: string
+                            description: ok if valid, else error
+                          token:
+                            type: string
+                            description: if successful, jWT is sent
+                """
+    response_json = {}
+    response_json["message"] = "error"
+    try:
+        ##
+        data = request.get_json()
+        ##
+        email = getDataFromRequest(dataObj=data,keyValue="email")
+        otp = getDataFromRequest(dataObj=data,keyValue="OTP")
+        submittedTime = int(round(time.time() * 1000))
+        # fetch data from db and verify the OTP values
+        response = table.get_item(
+            Key={
+                'EMAIL_ID': email
+            }
+        )
+        if 'Item' in response:
+            item = response['Item']
+            ##
+            genOTP = item['OTP']
+            genTime = item['OTP_GEN_TIME']
+            if genOTP == otp and ( ( submittedTime - genTime ) <= 1800000 ):
+                response_json["message"] = "ok"
+                response_json["token"] = encoder.encode_auth_token(email).decode('utf-8')
+            app.logger.debug(submittedTime - genTime)
+            # response_json["message"] = "ok"
+            # response_json["token"] = encoder.encode_auth_token(email).decode('utf-8')
         ##
     except Exception as e:
         app.logger.debug(e)
